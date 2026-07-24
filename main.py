@@ -163,9 +163,10 @@ async def contact_submit(
     })
 
     # Send email using Resend
+       # Send email using Resend
     try:
         import resend
-        resend.api_key = "re_PF4Wgvhy_8Tv7q8zQ74Kb4KWw5RhuUYEJ"
+        resend.api_key = "re_icb1ruh7_KVibEiJheYvpG7RwR2azyjt7"
 
         params = {
             "from": "Weblytic Solutions <onboarding@resend.dev>",
@@ -186,7 +187,6 @@ async def contact_submit(
         print("✅ Email sent successfully via Resend")
     except Exception as e:
         print("❌ Failed to send email:", str(e))
-
     return RedirectResponse(url="/contact/success", status_code=303)
 
 
