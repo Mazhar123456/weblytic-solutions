@@ -78,8 +78,8 @@ def save_contact_submission(data: dict) -> None:
 COMPANY = {
     "name": "Weblytic Solutions",
     "tagline": "Modern Websites. Real Business Results.",
-    "email": "hello@weblyticsolutions.com",
-    "phone": "+91 98765 43210",
+    "email": "Mazharashaikh@gmail.com",
+    "phone": "+91 7383388291",
     "address": "Ahmedabad, Gujarat, India",
     "year": datetime.now().year,
 }
