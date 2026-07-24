@@ -152,7 +152,7 @@ async def contact_submit(
     service_interested: str = Form(""),
     message: str = Form(...),
 ):
-    # Save to JSON file (as before)
+    # Save to JSON
     save_contact_submission({
         "name": name,
         "email": email,
@@ -162,36 +162,28 @@ async def contact_submit(
         "message": message,
     })
 
-    # Send email to your Gmail
+    # Send email using Resend
     try:
-        sender_email = "Mazharashaikh@gmail.com"
-        sender_password = "hmxlanwcehncoghc"          # Your App Password
-        receiver_email = "Mazharashaikh@gmail.com"
+        import resend
+        resend.api_key = "re_PF4Wgvhy_8Tv7q8zQ74Kb4KWw5RhuUYEJ"
 
-        msg = MIMEMultipart()
-        msg["From"] = sender_email
-        msg["To"] = receiver_email
-        msg["Subject"] = f"New Enquiry from {name} - Weblytic Solutions"
+        params = {
+            "from": "Weblytic Solutions <onboarding@resend.dev>",
+            "to": ["Mazharashaikh@gmail.com"],
+            "subject": f"New Enquiry from {name} - Weblytic Solutions",
+            "html": f"""
+                <h2>New Contact Form Submission</h2>
+                <p><strong>Name:</strong> {name}</p>
+                <p><strong>Email:</strong> {email}</p>
+                <p><strong>Phone:</strong> {phone}</p>
+                <p><strong>Company:</strong> {company_name}</p>
+                <p><strong>Service Interested:</strong> {service_interested}</p>
+                <p><strong>Message:</strong><br>{message}</p>
+            """
+        }
 
-        body = f"""
-New contact form submission:
-
-Name: {name}
-Email: {email}
-Phone: {phone}
-Company: {company_name}
-Service Interested: {service_interested}
-
-Message:
-{message}
-        """
-        msg.attach(MIMEText(body, "plain"))
-
-        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
-            server.login(sender_email, sender_password)
-            server.send_message(msg)
-
-        print("✅ Email sent successfully to Gmail")
+        resend.Emails.send(params)
+        print("✅ Email sent successfully via Resend")
     except Exception as e:
         print("❌ Failed to send email:", str(e))
 
