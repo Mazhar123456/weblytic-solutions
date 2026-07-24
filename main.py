@@ -166,7 +166,7 @@ async def contact_submit(
        # Send email using Resend
     try:
         import resend
-        resend.api_key = "re_icb1ruh7_KVibEiJheYvpG7RwR2azyjt7"
+        resend.api_key = "re_4JDb9dYD_DsAYTG1rWadPuzdhUM3bmAWR"
 
         params = {
             "from": "Weblytic Solutions <onboarding@resend.dev>",
