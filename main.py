@@ -1,4 +1,4 @@
-"""
+f"""
 Weblytic Solutions — Marketing Website
 ========================================
 A production-ready FastAPI + Jinja2 + Tailwind CSS website.
@@ -14,7 +14,9 @@ import json
 import os
 from datetime import datetime
 from pathlib import Path
-
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
@@ -150,22 +152,49 @@ async def contact_submit(
     service_interested: str = Form(""),
     message: str = Form(...),
 ):
-    """Handle contact form submission.
+    # Save to JSON file (as before)
+    save_contact_submission({
+        "name": name,
+        "email": email,
+        "phone": phone,
+        "company_name": company_name,
+        "service_interested": service_interested,
+        "message": message,
+    })
 
-    Saves the submission locally (JSON file + console log) and redirects
-    the visitor to a friendly success page.
-    """
-    save_contact_submission(
-        {
-            "name": name,
-            "email": email,
-            "phone": phone,
-            "company_name": company_name,
-            "service_interested": service_interested,
-            "message": message,
-        }
-    )
-    # Redirect (Post/Redirect/Get pattern) to avoid re-submission on refresh
+    # Send email to your Gmail
+    try:
+        sender_email = "Mazharashaikh@gmail.com"
+        sender_password = "hmxlanwcehncoghc"          # Your App Password
+        receiver_email = "Mazharashaikh@gmail.com"
+
+        msg = MIMEMultipart()
+        msg["From"] = sender_email
+        msg["To"] = receiver_email
+        msg["Subject"] = f"New Enquiry from {name} - Weblytic Solutions"
+
+        body = f"""
+New contact form submission:
+
+Name: {name}
+Email: {email}
+Phone: {phone}
+Company: {company_name}
+Service Interested: {service_interested}
+
+Message:
+{message}
+        """
+        msg.attach(MIMEText(body, "plain"))
+
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+            server.login(sender_email, sender_password)
+            server.send_message(msg)
+
+        print("✅ Email sent successfully to Gmail")
+    except Exception as e:
+        print("❌ Failed to send email:", str(e))
+
     return RedirectResponse(url="/contact/success", status_code=303)
 
 
