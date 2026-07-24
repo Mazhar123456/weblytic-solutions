@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Message Sent — Weblytic Solutions{% endblock %}
+{% block meta_description %}Thank you for contacting Weblytic Solutions. We've received your message and will be in touch soon.{% endblock %}
+
+{% block content %}
+
+<section class="bg-navy-50 min-h-[70vh] flex items-center py-20">
+    <div class="max-w-2xl mx-auto px-6 lg:px-8 text-center">
+        <div class="w-20 h-20 rounded-full bg-skyblue-500 flex items-center justify-center mx-auto mb-8">
+            <svg class="w-10 h-10 text-navy-950" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-navy-900">Thank you — your message has been sent!</h1>
+        <p class="mt-5 text-lg text-navy-600 leading-relaxed">
+            We've received your project details and a member of the Weblytic Solutions team will get back to you within one business day. In the meantime, feel free to browse our recent work or check out our pricing packages.
+        </p>
+        <div class="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <a href="/portfolio" class="inline-flex items-center gap-2 bg-navy-900 hover:bg-navy-800 text-white font-semibold px-7 py-3.5 rounded-lg transition-colors">
+                View Our Portfolio
+            </a>
+            <a href="/" class="inline-flex items-center gap-2 border border-navy-200 hover:border-skyblue-500 text-navy-900 font-semibold px-7 py-3.5 rounded-lg transition-colors">
+                Back to Home
+            </a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
