@@ -35,7 +35,12 @@ html {
 .animate-fade-up {
     animation: fadeInUp 0.7s ease both;
 }
-
+.hero-section {
+    background-image: url('/static/images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
 /* Subtle marquee-free scroll for testimonials on mobile */
 .scrollbar-hide::-webkit-scrollbar { display: none; }
 .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
