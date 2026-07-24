@@ -166,28 +166,29 @@ async def contact_submit(
        # Send email using Resend
     try:
         import resend
-        resend.api_key = "re_A19thX7j_NBBM7xzhHE1gs6m7Djx41hbu"
+        resend.api_key = os.environ.get("RESEND_API_KEY")
 
-        params = {
-            "from": "Weblytic Solutions <onboarding@resend.dev>",
-            "to": ["Mazharashaikh@gmail.com"],
-            "subject": f"New Enquiry from {name} - Weblytic Solutions",
-            "html": f"""
-                <h2>New Contact Form Submission</h2>
-                <p><strong>Name:</strong> {name}</p>
-                <p><strong>Email:</strong> {email}</p>
-                <p><strong>Phone:</strong> {phone}</p>
-                <p><strong>Company:</strong> {company_name}</p>
-                <p><strong>Service Interested:</strong> {service_interested}</p>
-                <p><strong>Message:</strong><br>{message}</p>
-            """
-        }
-
-        resend.Emails.send(params)
-        print("✅ Email sent successfully via Resend")
+        if not resend.api_key:
+            print("❌ RESEND_API_KEY not set in environment")
+        else:
+            params = {
+                "from": "Weblytic Solutions <onboarding@resend.dev>",
+                "to": ["Mazharashaikh@gmail.com"],
+                "subject": f"New Enquiry from {name} - Weblytic Solutions",
+                "html": f"""
+                    <h2>New Contact Form Submission</h2>
+                    <p><strong>Name:</strong> {name}</p>
+                    <p><strong>Email:</strong> {email}</p>
+                    <p><strong>Phone:</strong> {phone}</p>
+                    <p><strong>Company:</strong> {company_name}</p>
+                    <p><strong>Service Interested:</strong> {service_interested}</p>
+                    <p><strong>Message:</strong><br>{message}</p>
+                """
+            }
+            resend.Emails.send(params)
+            print("✅ Email sent successfully via Resend")
     except Exception as e:
         print("❌ Failed to send email:", str(e))
-    return RedirectResponse(url="/contact/success", status_code=303)
 
 
 @app.get("/contact/success")
